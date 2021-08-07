@@ -45,13 +45,8 @@ BuildRequires: gettext
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 
-Requires: python3
-Requires: python3-six
-Requires: python3-pyudev >= %{pyudevver}
-Requires: parted >= %{partedver}
-Requires: python3-pyparted >= %{pypartedver}
-Requires: libselinux-python3
-Requires: python3-blockdev >= %{libblockdevver}
+%if 0%{?fedora}
+Requires: python3-libselinux
 Recommends: libblockdev-btrfs >= %{libblockdevver}
 Recommends: libblockdev-crypto >= %{libblockdevver}
 Recommends: libblockdev-dm >= %{libblockdevver}
@@ -65,11 +60,52 @@ Recommends: libblockdev-nvdimm >= %{libblockdevver}
 Recommends: libblockdev-part >= %{libblockdevver}
 Recommends: libblockdev-swap >= %{libblockdevver}
 Recommends: libblockdev-s390 >= %{libblockdevver}
+Requires: python3-blockdev >= %{libblockdevver}
 Requires: python3-bytesize >= %{libbytesizever}
-Requires: util-linux >= %{utillinuxver}
-Requires: lsof
+Requires: python3-pyparted >= %{pypartedver}
 Requires: python3-gobject-base
 Requires: systemd-udev
+%endif
+
+%if 0%{?suse_version}
+Requires: python3-selinux
+Recommends: libbd_btrfs2 >= %{libblockdevver}
+Recommends: libbd_crypto2 >= %{libblockdevver}
+Recommends: libbd_dm2 >= %{libblockdevver}
+Recommends: libbd_fs2 >= %{libblockdevver}
+Recommends: libbd_kbd2 >= %{libblockdevver}
+Recommends: libbd_loop2 >= %{libblockdevver}
+Recommends: libbd_lvm2 >= %{libblockdevver}
+Recommends: libbd_mdraid2 >= %{libblockdevver}
+Recommends: libbd_mpath2 >= %{libblockdevver}
+Recommends: libbd_part2 >= %{libblockdevver}
+Recommends: libbd_swap2 >= %{libblockdevver}
+Recommends: libbd_utils2 >= %{libblockdevver}
+Requires: python3-libblockdev >= %{libblockdevver}
+Requires: typelib-1_0-BlockDev-2_0 >= %{libblockdevver}
+Requires: python3-libbytesize >= %{libbytesizever}
+Requires: python3-parted >= %{pypartedver}
+Requires: python3-gobject
+Requires: udev
+%endif
+
+%if 0%{?mageia}
+Requires: python3-libselinux
+Recommends: libblockdev-plugins-all >= %{libblockdevver}
+Requires: python3-blockdev >= %{libblockdevver}
+Requires: lib64blockdev-gir2.0 >= %{libblockdevver}
+Requires: python3-bytesize >= %{libbytesizever}
+Requires: python3-parted >= %{pypartedver}
+Requires: python3-gobject-base
+Requires: systemd
+%endif
+
+Requires: python3
+Requires: python3-six
+Requires: python3-pyudev >= %{pyudevver}
+Requires: parted >= %{partedver}
+Requires: util-linux >= %{utillinuxver}
+Requires: lsof
 Requires: %{realname}-data = %{epoch}:%{version}-%{release}
 
 %description -n python3-%{realname}
@@ -91,7 +127,7 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %files -n %{realname}-data -f %{realname}.lang
 %{_sysconfdir}/dbus-1/system.d/*
 %{_datadir}/dbus-1/system-services/*
-/usr/libexec/*
+%{_libexecdir}/*
 %{_unitdir}/*
 
 %files -n python3-%{realname}
