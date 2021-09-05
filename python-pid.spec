@@ -13,7 +13,7 @@ PidFile can also be used as a context manager or a decorator.}
 
 Name:           python-%{srcname}
 Version:        3.0.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        PID file management library
 
 License:        ASL 2.0
@@ -54,5 +54,8 @@ rm -rf %{srcname}.egg-info
 %{python3_sitelib}/%{srcname}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sun Sep 05 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.0.4-2
+- Rebuild for OpenMandriva
+
 * Sat Aug 07 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.0.4-1
 - Initial build of 3.0.4-1

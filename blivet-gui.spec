@@ -1,7 +1,7 @@
 Summary: Tool for data storage configuration
 Name: blivet-gui
 Version: 2.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Source0: http://github.com/storaged-project/blivet-gui/releases/download/%{version}/%{name}-%{version}.tar.gz
 License: GPLv2+
 BuildArch: noarch
@@ -40,6 +40,12 @@ Requires: polkit-agent
 Requires: libblockdev-plugins-all
 %endif
 
+%if 0%{?mdkversion}
+BuildRequires: appstream-util
+Requires: polkit-agent
+Requires: libblockdev-plugins-all
+%endif
+
 
 %description
 Graphical (GTK) tool for manipulation and configuration of data storage
@@ -48,6 +54,7 @@ Graphical (GTK) tool for manipulation and configuration of data storage
 %package -n blivet-gui-runtime
 Summary: blivet-gui runtime
 
+%if 0%{?fedora}
 BuildRequires: python3-devel
 BuildRequires: gettext >= 0.18.3
 BuildRequires: python3-setuptools
@@ -59,12 +66,22 @@ Requires: gettext
 Requires: python3-blivet >= 1:3.1.2
 Requires: python3-pid
 
-%if 0%{?fedora}
 Requires: libreport
 Requires: gtk3
 %endif
 
 %if 0%{?suse_version}
+BuildRequires: python3-devel
+BuildRequires: gettext >= 0.18.3
+BuildRequires: python3-setuptools
+BuildRequires: make
+
+Requires: python3
+Requires: python3-gobject
+Requires: gettext
+Requires: python3-blivet >= 1:3.1.2
+Requires: python3-pid
+
 Requires: libgtk-3-0
 Requires: typelib-1_0-Gtk-3_0
 Requires: gobject-introspection
@@ -73,8 +90,32 @@ Requires: typelib-1_0-Gtk-3_0
 %endif
 
 %if 0%{?mageia}
+BuildRequires: python3-devel
+BuildRequires: gettext >= 0.18.3
+BuildRequires: python3-setuptools
+BuildRequires: make
+
+Requires: python3
+Requires: python3-gobject
+Requires: gettext
+Requires: python3-blivet >= 1:3.1.2
+Requires: python3-pid
+
 Requires: gtk+3.0
 Requires: lib64gtk-gir3.0
+%endif
+
+%if 0%{?mdkversion}
+BuildRequires: python-devel
+BuildRequires: gettext >= 0.18.3
+BuildRequires: python-setuptools
+BuildRequires: make
+
+Requires: python
+Requires: python-gobject
+Requires: gettext
+Requires: python3-blivet >= 1:3.1.2
+Requires: python3-pid
 %endif
 
 %description -n blivet-gui-runtime
@@ -113,6 +154,9 @@ mkdir -p %{buildroot}/%{_localstatedir}/log/blivet-gui
 %{_sysconfdir}/libreport/events.d/blivet-gui_event.conf
 
 %changelog
+* Sun Sep 05 2021 Vojtech Trefny <vtrefny@redhat.com> - 2.3.0-2
+- Rebuild for OpenMandriva
+
 * Sun Aug 08 2021 Vojtech Trefny <vtrefny@redhat.com> - 2.3.0-1
 - Update to latest release 2.3.0
 

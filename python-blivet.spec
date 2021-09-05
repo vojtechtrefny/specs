@@ -3,13 +3,16 @@ Name: python-blivet
 Url: https://storageapis.wordpress.com/projects/blivet
 Version: 3.4.1
 
-Release: 1%{?dist}
+Release: 2%{?dist}
 Epoch: 1
 License: LGPLv2+
 %global realname blivet
 %global realversion %{version}
 Source0: http://github.com/storaged-project/blivet/archive/%{realname}-%{realversion}.tar.gz
 Source1: http://github.com/storaged-project/blivet/archive/%{realname}-%{realversion}-tests.tar.gz
+%if 0%{?mdkversion}
+Patch0: 0001-OpenMandriva-Use-lib-for-DBus-service-instead-of-usr.patch
+%endif
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -64,6 +67,9 @@ Requires: python3-blockdev >= %{libblockdevver}
 Requires: python3-bytesize >= %{libbytesizever}
 Requires: python3-pyparted >= %{pypartedver}
 Requires: python3-gobject-base
+Requires: python3-pyudev >= %{pyudevver}
+Requires: python3-six
+Requires: python3
 Requires: systemd-udev
 %endif
 
@@ -86,6 +92,9 @@ Requires: typelib-1_0-BlockDev-2_0 >= %{libblockdevver}
 Requires: python3-libbytesize >= %{libbytesizever}
 Requires: python3-parted >= %{pypartedver}
 Requires: python3-gobject
+Requires: python3-pyudev >= %{pyudevver}
+Requires: python3-six
+Requires: python3
 Requires: udev
 %endif
 
@@ -97,12 +106,25 @@ Requires: lib64blockdev-gir2.0 >= %{libblockdevver}
 Requires: python3-bytesize >= %{libbytesizever}
 Requires: python3-parted >= %{pypartedver}
 Requires: python3-gobject-base
+Requires: python3-pyudev >= %{pyudevver}
+Requires: python3-six
+Requires: python3
 Requires: systemd
 %endif
 
-Requires: python3
-Requires: python3-six
-Requires: python3-pyudev >= %{pyudevver}
+%if 0%{?mdkversion}
+Requires: python3-libselinux
+Recommends: libblockdev-plugins-all >= %{libblockdevver}
+Requires: python-blockdev >= %{libblockdevver}
+Requires: python-bytesize >= %{libbytesizever}
+Requires: python-parted >= %{pypartedver}
+Requires: python-gi
+Requires: pyudev >= %{pyudevver}
+Requires: python-six
+Requires: python
+Requires: systemd
+%endif
+
 Requires: parted >= %{partedver}
 Requires: util-linux >= %{utillinuxver}
 Requires: lsof
@@ -136,6 +158,9 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %{python3_sitelib}/*
 
 %changelog
+* Sun Sep 05 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.4.1-2
+- Rebuild for OpenMandriva
+
 * Thu Aug 19 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.4.1-1
 - Update to 3.4.1
 
