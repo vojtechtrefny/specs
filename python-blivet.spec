@@ -1,9 +1,9 @@
 Summary:  A python module for system storage configuration
 Name: python-blivet
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.4.1
+Version: 3.4.2
 
-Release: 2%{?dist}
+Release: 1%{?dist}
 Epoch: 1
 License: LGPLv2+
 %global realname blivet
@@ -158,6 +158,9 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %{python3_sitelib}/*
 
 %changelog
+* Thu Sep 30 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.4.2-1
+- Update to 3.4.2
+
 * Sun Sep 05 2021 Vojtech Trefny <vtrefny@redhat.com> - 3.4.1-2
 - Rebuild for OpenMandriva
 
