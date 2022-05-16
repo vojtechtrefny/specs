@@ -1,7 +1,7 @@
 Summary:  A python module for system storage configuration
 Name: python-blivet
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.4.3
+Version: 3.4.4
 
 Release: 1%{?dist}
 Epoch: 1
@@ -158,6 +158,9 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %{python3_sitelib}/*
 
 %changelog
+* Mon May 16 2022 Vojtech Trefny <vtrefny@redhat.com> - 3.4.4-1
+- Update to 3.4.4
+
 * Tue Feb 01 2022 Vojtech Trefny <vtrefny@redhat.com> - 3.4.3-1
 - Update to 3.4.3
 
