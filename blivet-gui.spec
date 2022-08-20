@@ -29,7 +29,6 @@ Requires: libbd_loop2
 Requires: libbd_lvm2
 Requires: libbd_mdraid2
 Requires: libbd_mpath2
-Requires: libbd_part2
 Requires: libbd_swap2
 Requires: libbd_utils2
 %endif
