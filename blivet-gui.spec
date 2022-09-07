@@ -1,7 +1,7 @@
 Summary: Tool for data storage configuration
 Name: blivet-gui
 Version: 2.3.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Source0: http://github.com/storaged-project/blivet-gui/releases/download/%{version}/%{name}-%{version}.tar.gz
 License: GPLv2+
 BuildArch: noarch
@@ -61,7 +61,6 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: gettext
 Requires: python3-blivet >= 1:3.1.2
 Requires: python3-pid
 
@@ -77,7 +76,6 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: gettext
 Requires: python3-blivet >= 1:3.1.2
 Requires: python3-pid
 
@@ -96,7 +94,6 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: gettext
 Requires: python3-blivet >= 1:3.1.2
 Requires: python3-pid
 
@@ -111,10 +108,12 @@ BuildRequires: python-setuptools
 BuildRequires: make
 
 Requires: python
-Requires: python-gobject
-Requires: gettext
+Requires: python-gobject3
 Requires: python3-blivet >= 1:3.1.2
 Requires: python3-pid
+
+Requires: gtk+3.0
+Requires: lib64gtk-gir3.0
 %endif
 
 %description -n blivet-gui-runtime
@@ -150,9 +149,11 @@ mkdir -p %{buildroot}/%{_localstatedir}/log/blivet-gui
 %{_bindir}/blivet-gui
 %{_bindir}/blivet-gui-daemon
 %{_localstatedir}/log/blivet-gui
-%{_sysconfdir}/libreport/events.d/blivet-gui_event.conf
 
 %changelog
+* Wed Sep 07 2022 Vojtech Trefny <vtrefny@redhat.com> - 2.3.0-3
+- Fix dependencies for OpenMandriva
+
 * Sun Sep 05 2021 Vojtech Trefny <vtrefny@redhat.com> - 2.3.0-2
 - Rebuild for OpenMandriva
 
