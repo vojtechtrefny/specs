@@ -50,16 +50,15 @@ Requires: python3-libselinux
 Recommends: libblockdev-btrfs >= %{libblockdevver}
 Recommends: libblockdev-crypto >= %{libblockdevver}
 Recommends: libblockdev-dm >= %{libblockdevver}
-Recommends: libblockdev-fs >= %{libblockdevver}
-Recommends: libblockdev-kbd >= %{libblockdevver}
 Recommends: libblockdev-loop >= %{libblockdevver}
 Recommends: libblockdev-lvm >= %{libblockdevver}
 Recommends: libblockdev-mdraid >= %{libblockdevver}
 Recommends: libblockdev-mpath >= %{libblockdevver}
 Recommends: libblockdev-nvdimm >= %{libblockdevver}
-Recommends: libblockdev-part >= %{libblockdevver}
 Recommends: libblockdev-swap >= %{libblockdevver}
+%ifarch s390 s390x
 Recommends: libblockdev-s390 >= %{libblockdevver}
+%endif
 Requires: python3-blockdev >= %{libblockdevver}
 Requires: python3-bytesize >= %{libbytesizever}
 Requires: python3-pyparted >= %{pypartedver}
@@ -75,15 +74,11 @@ Requires: python3-selinux
 Recommends: libbd_btrfs2 >= %{libblockdevver}
 Recommends: libbd_crypto2 >= %{libblockdevver}
 Recommends: libbd_dm2 >= %{libblockdevver}
-Recommends: libbd_fs2 >= %{libblockdevver}
-Recommends: libbd_kbd2 >= %{libblockdevver}
 Recommends: libbd_loop2 >= %{libblockdevver}
 Recommends: libbd_lvm2 >= %{libblockdevver}
 Recommends: libbd_mdraid2 >= %{libblockdevver}
 Recommends: libbd_mpath2 >= %{libblockdevver}
-Recommends: libbd_part2 >= %{libblockdevver}
 Recommends: libbd_swap2 >= %{libblockdevver}
-Recommends: libbd_utils2 >= %{libblockdevver}
 Requires: python3-libblockdev >= %{libblockdevver}
 Requires: typelib-1_0-BlockDev-2_0 >= %{libblockdevver}
 Requires: python3-libbytesize >= %{libbytesizever}
