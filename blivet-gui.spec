@@ -1,6 +1,6 @@
 Summary: Tool for data storage configuration
 Name: blivet-gui
-Version: 2.4.0
+Version: 2.4.1
 Release: 1%{?dist}
 Source0: http://github.com/storaged-project/blivet-gui/releases/download/%{version}/%{name}-%{version}.tar.gz
 License: GPLv2+
@@ -151,6 +151,9 @@ mkdir -p %{buildroot}/%{_localstatedir}/log/blivet-gui
 %{_localstatedir}/log/blivet-gui
 
 %changelog
+* Sun Mar 26 2023 Vojtech Trefny <vtrefny@redhat.com> - 2.4.1-1
+- Update to the latest release 2.4.1
+
 * Sun Sep 18 2022 Vojtech Trefny <vtrefny@redhat.com> - 2.4.0-1
 - Update to the latest release 2.4.0
 
