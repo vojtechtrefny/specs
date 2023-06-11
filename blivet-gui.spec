@@ -23,8 +23,6 @@ Requires: polkit
 Requires: libbd_btrfs2
 Requires: libbd_crypto2
 Requires: libbd_dm2
-Requires: libbd_fs2
-Requires: libbd_kbd2
 Requires: libbd_loop2
 Requires: libbd_lvm2
 Requires: libbd_mdraid2
