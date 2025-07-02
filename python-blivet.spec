@@ -85,7 +85,7 @@ Recommends: libbd_part3 >= %{libblockdevver}
 Recommends: libbd_swap3 >= %{libblockdevver}
 Requires: python3-libblockdev >= %{libblockdevver}
 Requires: typelib-1_0-BlockDev-3_0 >= %{libblockdevver}
-Requires: python3-libbytesize >= %{libbytesizever}
+Requires: python3-bytesize >= %{libbytesizever}
 Requires: python3-parted >= %{pypartedver}
 Requires: python3-gobject
 Requires: python3-pyudev >= %{pyudevver}
