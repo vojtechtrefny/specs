@@ -1,9 +1,14 @@
 Summary: Tool for data storage configuration
 Name: blivet-gui
-Version: 2.4.2
+Version: 2.6.0
 Release: 1%{?dist}
 Source0: http://github.com/storaged-project/blivet-gui/releases/download/%{version}/%{name}-%{version}.tar.gz
-License: GPLv2+
+
+%if 0%{?fedora}
+Source1: blivet-gui_event.conf
+%endif
+
+License: GPL-2.0-or-later
 BuildArch: noarch
 URL: http://github.com/storaged-project/blivet-gui
 
@@ -20,24 +25,19 @@ Requires: libblockdev-plugins-all
 %if 0%{?suse_version}
 BuildRequires: appstream-glib
 Requires: polkit
-Requires: libbd_btrfs2
-Requires: libbd_crypto2
-Requires: libbd_dm2
-Requires: libbd_loop2
-Requires: libbd_lvm2
-Requires: libbd_mdraid2
-Requires: libbd_mpath2
-Requires: libbd_swap2
-Requires: libbd_utils2
+Requires: libbd_btrfs3 >= %{libblockdevver}
+Requires: libbd_crypto3 >= %{libblockdevver}
+Requires: libbd_dm3 >= %{libblockdevver}
+Requires: libbd_fs3 >= %{libblockdevver}
+Requires: libbd_loop3 >= %{libblockdevver}
+Requires: libbd_lvm3 >= %{libblockdevver}
+Requires: libbd_mdraid3 >= %{libblockdevver}
+Requires: libbd_mpath3 >= %{libblockdevver}
+Requires: libbd_part3 >= %{libblockdevver}
+Requires: libbd_swap3 >= %{libblockdevver}
 %endif
 
 %if 0%{?mageia}
-BuildRequires: appstream-util
-Requires: polkit-agent
-Requires: libblockdev-plugins-all
-%endif
-
-%if 0%{?mdkversion}
 BuildRequires: appstream-util
 Requires: polkit-agent
 Requires: libblockdev-plugins-all
@@ -59,7 +59,7 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: python3-blivet >= 1:3.1.2
+Requires: python3-blivet >= 1:3.8.0
 Requires: python3-pid
 
 Requires: libreport
@@ -74,7 +74,7 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: python3-blivet >= 1:3.1.2
+Requires: python3-blivet >= 1:3.8.0
 Requires: python3-pid
 
 Requires: libgtk-3-0
@@ -92,22 +92,7 @@ BuildRequires: make
 
 Requires: python3
 Requires: python3-gobject
-Requires: python3-blivet >= 1:3.1.2
-Requires: python3-pid
-
-Requires: gtk+3.0
-Requires: lib64gtk-gir3.0
-%endif
-
-%if 0%{?mdkversion}
-BuildRequires: python-devel
-BuildRequires: gettext >= 0.18.3
-BuildRequires: python-setuptools
-BuildRequires: make
-
-Requires: python
-Requires: python-gobject3
-Requires: python3-blivet >= 1:3.1.2
+Requires: python3-blivet >= 1:3.8.0
 Requires: python3-pid
 
 Requires: gtk+3.0
@@ -130,6 +115,11 @@ make DESTDIR=%{buildroot} install
 desktop-file-validate %{buildroot}/%{_datadir}/applications/blivet-gui.desktop
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/blivet-gui.appdata.xml
 
+%if 0%{?fedora}
+mkdir -p %{buildroot}/%{_sysconfdir}/libreport/events.d/
+install -m644 %{SOURCE1} %{buildroot}/%{_sysconfdir}/libreport/events.d/
+%endif
+
 mkdir -p %{buildroot}/%{_localstatedir}/log/blivet-gui
 
 %find_lang %{name}
@@ -147,6 +137,10 @@ mkdir -p %{buildroot}/%{_localstatedir}/log/blivet-gui
 %{_bindir}/blivet-gui
 %{_bindir}/blivet-gui-daemon
 %{_localstatedir}/log/blivet-gui
+
+%if 0%{?fedora}
+%{_sysconfdir}/libreport/events.d/blivet-gui_event.conf
+%endif
 
 %changelog
 * Wed Aug 16 2023 Vojtech Trefny <vtrefny@redhat.com> - 2.4.2-1
