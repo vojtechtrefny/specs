@@ -1,24 +1,28 @@
 Summary:  A python module for system storage configuration
 Name: python-blivet
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.7.1
+Version: 3.12.1
 
-Release: 1%{?dist}
+#%%global prerelease .b2
+# prerelease, if defined, should be something like .a1, .b1, .b2.dev1, or .c2
+Release: 1%{?prerelease}%{?dist}
 Epoch: 1
-License: LGPLv2+
+License: LGPL-2.1-or-later
 %global realname blivet
-%global realversion %{version}
-Source0: http://github.com/storaged-project/blivet/archive/%{realname}-%{realversion}.tar.gz
-Source1: http://github.com/storaged-project/blivet/archive/%{realname}-%{realversion}-tests.tar.gz
+%global realversion %{version}%{?prerelease}
+Source0: http://github.com/storaged-project/blivet/releases/download/%{realname}-%{realversion}/%{realname}-%{realversion}.tar.gz
+Source1: http://github.com/storaged-project/blivet/releases/download/%{realname}-%{realversion}/%{realname}-%{realversion}-tests.tar.gz
+
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
-%global partedver 3.2
+%global partedver 1.8.1
 %global pypartedver 3.10.4
 %global utillinuxver 2.15.1
-%global libblockdevver 2.24
+%global libblockdevver 3.3.0
 %global libbytesizever 0.3
 %global pyudevver 0.18
+%global s390utilscorever 2.31.0
 
 BuildArch: noarch
 
@@ -46,74 +50,70 @@ BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 
 %if 0%{?fedora}
-Requires: python3-libselinux
+Requires: python3-pyudev >= %{pyudevver}
+Requires: parted >= %{partedver}
+Requires: python3-pyparted >= %{pypartedver}
+Requires: libselinux-python3
+Requires: python3-libmount
+Requires: python3-blockdev >= %{libblockdevver}
 Recommends: libblockdev-btrfs >= %{libblockdevver}
 Recommends: libblockdev-crypto >= %{libblockdevver}
 Recommends: libblockdev-dm >= %{libblockdevver}
+Recommends: libblockdev-fs >= %{libblockdevver}
 Recommends: libblockdev-loop >= %{libblockdevver}
 Recommends: libblockdev-lvm >= %{libblockdevver}
 Recommends: libblockdev-mdraid >= %{libblockdevver}
 Recommends: libblockdev-mpath >= %{libblockdevver}
-Recommends: libblockdev-nvdimm >= %{libblockdevver}
+Recommends: libblockdev-nvme >= %{libblockdevver}
+Recommends: libblockdev-part >= %{libblockdevver}
 Recommends: libblockdev-swap >= %{libblockdevver}
-%ifarch s390 s390x
 Recommends: libblockdev-s390 >= %{libblockdevver}
-%endif
-Requires: python3-blockdev >= %{libblockdevver}
-Requires: python3-bytesize >= %{libbytesizever}
-Requires: python3-pyparted >= %{pypartedver}
-Requires: python3-gobject-base
-Requires: python3-pyudev >= %{pyudevver}
-Requires: python3-six
-Requires: python3
-Requires: systemd-udev
+Recommends: s390utils-core >= %{s390utilscorever}
 %endif
 
 %if 0%{?suse_version}
 Requires: python3-selinux
-Recommends: libbd_btrfs2 >= %{libblockdevver}
-Recommends: libbd_crypto2 >= %{libblockdevver}
-Recommends: libbd_dm2 >= %{libblockdevver}
-Recommends: libbd_loop2 >= %{libblockdevver}
-Recommends: libbd_lvm2 >= %{libblockdevver}
-Recommends: libbd_mdraid2 >= %{libblockdevver}
-Recommends: libbd_mpath2 >= %{libblockdevver}
-Recommends: libbd_swap2 >= %{libblockdevver}
+Recommends: libbd_btrfs3 >= %{libblockdevver}
+Recommends: libbd_crypto3 >= %{libblockdevver}
+Recommends: libbd_dm3 >= %{libblockdevver}
+Recommends: libbd_fs3 >= %{libblockdevver}
+Recommends: libbd_loop3 >= %{libblockdevver}
+Recommends: libbd_lvm3 >= %{libblockdevver}
+Recommends: libbd_mdraid3 >= %{libblockdevver}
+Recommends: libbd_mpath3 >= %{libblockdevver}
+Recommends: libbd_part3 >= %{libblockdevver}
+Recommends: libbd_swap3 >= %{libblockdevver}
 Requires: python3-libblockdev >= %{libblockdevver}
-Requires: typelib-1_0-BlockDev-2_0 >= %{libblockdevver}
+Requires: typelib-1_0-BlockDev-3_0 >= %{libblockdevver}
 Requires: python3-libbytesize >= %{libbytesizever}
 Requires: python3-parted >= %{pypartedver}
 Requires: python3-gobject
 Requires: python3-pyudev >= %{pyudevver}
-Requires: python3-six
+Requires: python3-libmount
 Requires: python3
 Requires: udev
 %endif
 
 %if 0%{?mageia}
 Requires: python3-libselinux
-Recommends: libblockdev-plugins-all >= %{libblockdevver}
+Recommends: lib64bd_btrfs3 >= %{libblockdevver}
+Recommends: lib64bd_crypto3 >= %{libblockdevver}
+Recommends: lib64bd_dm3 >= %{libblockdevver}
+Recommends: lib64bd_fs3 >= %{libblockdevver}
+Recommends: lib64bd_loop3 >= %{libblockdevver}
+Recommends: lib64bd_lvm3 >= %{libblockdevver}
+Recommends: lib64bd_mdraid3 >= %{libblockdevver}
+Recommends: lib64bd_mpath3 >= %{libblockdevver}
+Recommends: lib64bd_part3 >= %{libblockdevver}
+Recommends: lib64bd_swap3 >= %{libblockdevver}
 Requires: python3-blockdev >= %{libblockdevver}
-Requires: lib64blockdev-gir2.0 >= %{libblockdevver}
+Requires: lib64blockdev-gir3.0 >= %{libblockdevver}
 Requires: python3-bytesize >= %{libbytesizever}
 Requires: python3-parted >= %{pypartedver}
 Requires: python3-gobject-base
 Requires: python3-pyudev >= %{pyudevver}
-Requires: python3-six
+Requires: python3-libmount
 Requires: python3
-Requires: systemd
-%endif
-
-%if 0%{?mdkversion}
-Requires: python3-libselinux
-Recommends: libblockdev-plugins-all >= %{libblockdevver}
-Requires: python-blockdev >= %{libblockdevver}
-Requires: python-bytesize >= %{libbytesizever}
-Requires: python-parted >= %{pypartedver}
-Requires: python-gi
-Requires: pyudev >= %{pyudevver}
-Requires: python-six
-Requires: python
 Requires: systemd
 %endif
 
@@ -150,6 +150,9 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %{python3_sitelib}/*
 
 %changelog
+* Wed Jul 02 2025 Vojtech Trefny <vtrefny@redhat.com> - 3.12.1-1
+- Update to 3.12.1
+
 * Thu Mar 16 2023 Vojtech Trefny <vtrefny@redhat.com> - 3.7.1-1
 - Update to 3.7.1
 
