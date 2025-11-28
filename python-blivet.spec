@@ -1,7 +1,7 @@
 Summary:  A python module for system storage configuration
 Name: python-blivet
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.12.1
+Version: 3.13.1
 
 #%%global prerelease .b2
 # prerelease, if defined, should be something like .a1, .b1, .b2.dev1, or .c2
@@ -19,7 +19,7 @@ Source1: http://github.com/storaged-project/blivet/releases/download/%{realname}
 %global partedver 1.8.1
 %global pypartedver 3.10.4
 %global utillinuxver 2.15.1
-%global libblockdevver 3.3.0
+%global libblockdevver 3.4.0
 %global libbytesizever 0.3
 %global pyudevver 0.18
 %global s390utilscorever 2.31.0
@@ -47,7 +47,6 @@ Summary: A python3 package for examining and modifying storage configuration.
 
 BuildRequires: gettext
 BuildRequires: python3-devel
-BuildRequires: python3-setuptools
 
 %if 0%{?fedora}
 Requires: python3-pyudev >= %{pyudevver}
@@ -131,10 +130,10 @@ configuration.
 %autosetup -n %{realname}-%{realversion} -b1 -p1
 
 %build
-make PYTHON=%{__python3}
+make
 
 %install
-make PYTHON=%{__python3} DESTDIR=%{buildroot} install
+make DESTDIR=%{buildroot} install
 
 %find_lang %{realname}
 
@@ -150,6 +149,9 @@ make PYTHON=%{__python3} DESTDIR=%{buildroot} install
 %{python3_sitelib}/*
 
 %changelog
+* Fri Nov 28 2025 Vojtech Trefny <vtrefny@redhat.com> - 3.13.1-1
+- Update to 3.13.1
+
 * Wed Jul 02 2025 Vojtech Trefny <vtrefny@redhat.com> - 3.12.1-1
 - Update to 3.12.1
 
